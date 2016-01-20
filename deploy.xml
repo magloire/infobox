@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<deploy>
+	<version>0.9</version>
+    <makedir dir="[cbinfo.wwwroot.dir]/modules/infobox/"/>	
+	<copydir fromdir="[module:infobox.dir]/datasources" todir="[cbinfo.wwwroot.dir]/modules/infobox/datasources" replacetext="true"/>
+    <copydir fromdir="[module:infobox.dir]/tools" todir="[cbinfo.wwwroot.dir]/modules/infobox/tools" replacetext="true"/>  
+    <copydir fromdir="[module:infobox.dir]/pages" todir="[cbinfo.wwwroot.dir]/modules/infobox/pages" replacetext="true"/>
+    <copydir fromdir="[module:infobox.dir]/js" todir="[cbinfo.wwwroot.dir]/modules/infobox/js"/>
+    <copydir fromdir="[module:infobox.dir]/css" todir="[cbinfo.wwwroot.dir]/modules/infobox/css"/>
+	
+	
+</deploy>

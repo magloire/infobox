@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+
+<formular name="infobox">
+      <headerhtml url="/modules/formularconfig/html/header.html"></headerhtml>
+      <contact email="miljo@albertsund.dk" phone="-" link="http://www.albertsund.dk">Albertslund Kommune</contact>
+      <title>Infobox</title>
+      <header>Infobox</header>
+      <subheader>Denne formular er opdatere infobox 1</subheader>
+      <submitpages>
+          <!-- <page parser="setFrid">formular.create-frid</page> -->
+          <!-- <page parser="setPdf">formularconfig.create-pdf</page> -->
+          <!-- <page parser="setJSON" url="/jsp/modules/formular/final_json.jsp">move</page> -->
+          <page>formular.save</page>
+      </submitpages>
+      <reportprofile>ak_hjemmeside</reportprofile>
+  <reportxsl>nyt_registreringsnummer</reportxsl>
+      <tabs>true</tabs>
+  <css>/modules/formularconfig/css/ak.css</css>
+  <js>/modules/formularconfig/js/ak.js</js>
+      <messages>
+          <message name="done"><![CDATA[<div class="header">Ansøgningen er nu registreret</div>Kommunen vender tilbage inden 14 dage, hvis der er brug for ydeligere oplysninger.]]></message>
+          <message name="saving"><![CDATA[<div class="header">Gemmer oplysninger...</div>Det kan tage lidt tid, så vær tålmodig.]]></message>
+          <message name="error"><![CDATA[<div class="header">Der opstod en fejl i forbindelse med registreringen af ansøgningen</div>Kontakt venligst kommunen for yderligere oplysninger.]]></message>
+      </messages>
+      <content displayname="Besked">
+          <input type="hidden" urlparam="datasource" defaultvalue="ds-kort_beskeder"/>
+    <!-- <input type="hidden" urlparam="dato" defaultvalue="javascript:(new Date()).toLocaleDateString('da');"/> -->
+          <input type="h1" class="section" displayname="Infobox"/>
+    <!-- <input type="text" displayname="Har du ønske om at få etableret en handikapparkeringsplads ud for din bolig, skal du søge Albertslund Kommune om tilladelse"></input> -->
+          <input type="h2" displayname="Skriv ny besked"/>
+          <input type="input" displayname="title" urlparam="title" placeholder="Indtast title" required="true" validate="Angiv titlen"/>
+          <input type="textarea" displayname="besked" urlparam="message" placeholder="Indtast besked" required="true" validate="Angiv beskeden"/>
+          <input type="date" displayname="udløbsdatoen" urlparam="expire_date" placeholder="Indtast besked" required="true" validate="Angiv besked"/>
+          <input type="input" displayname="link" urlparam="link" placeholder="Indtast link" required="false" validate="Angiv titlen"/>
+      </content>
+  <content displayname="Indsend" type="confirm">
+          <input type="message" class="alert alert-danger" displayname="&lt;strong&gt;Manglende oplysninger&lt;/strong&gt;&lt;br/&gt;Det er markeret nedenfor, hvor der mangler oplysninger" condition="formular.valid === false"/>
+          <input type="h1" displayname="Indsend oplysninger"/>
+          <!-- <input type="text" displayname="Oplysningerne bliver sendt til kommunen, der vender tilbage."/> -->
+      </content>
+</formular>
+</config>

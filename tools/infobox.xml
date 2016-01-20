@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tool type="plugin">
+	<requires>
+        <file type="script" name="/modules/infobox/css/bootstrap/js/bootstrap.min.js" priority="6"/>
+        <file type="script" name="/modules/infobox/js/app.js" priority="6"/>
+        <file type="css" name="/modules/infobox/css/bootstrap/css/bootstrap.min.css" priority="6"/>
+    </requires>
+    <src><![CDATA[
+		messageController.init();
+		setInterval(function(){
+			messageController.init();
+		},20000); 
+	]]></src>
+
+
+		<jssrc><![CDATA[
+
+		]]></jssrc>
+
+	<htmlsrc><![CDATA[
+
+		<div id="cookiepopup" class="container">
+
+			<div class="row">
+				<div id="cookieContent" class="col-md-6" style="position:absolute;bottom:30px;background-color:rgb(251, 225, 229);display:none;border:2px solid rgb(255, 0, 66);">
+
+					<div id="content" class="text-center" style="padding:20px;"></div>
+					<button id="okBtn"style="display:block; margin-left:auto;margin-right:auto;margin-bottom:3px;"class="btn btn-danger">close</button>
+				</div>
+				<div class="col-md-3" style="position:absolute; right:0;bottom:0;z-index:520;">
+					<div id="messageList" class="list-group" style="display:none;/*border:2px solid rgb(255, 0, 66);*/margin-bottom:3px;">
+					</div>
+					<div id="notificationBar" class="list-group" style="/*border:2px solid rgb(255, 0, 66);*/display:none;">
+					  <button type="button" style="font-weight:bold;/*background-color:rgb(251, 225, 229);*/" class="list-group-item k1"></button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- Modal -->
+		<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		  <div class="modal-dialog" role="document">
+			<div class="modal-content">
+			  <div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title" id="myModalLabel">Modal title</h4>
+			  </div>
+			  <div class="modal-body">
+				...
+			  </div>
+			  <div class="modal-footer">
+				<button id="dismissBtn" type="button" class="btn btn-primary" data-dismiss="modal">Luk</button>
+				<!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+			  </div>
+			</div>
+		  </div>
+		</div>
+    ]]></htmlsrc>
+</tool>

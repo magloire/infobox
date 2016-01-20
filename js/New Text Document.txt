@@ -1,0 +1,9 @@
+		var params_inner = {
+			name: 'test_name',
+			id: 9,
+		};
+		
+		var url_inner = cbKort.getUrl(params_inner);
+		var request = new CBhttp();
+		request.executeUrl(url_inner);
+		var inner_info = JSON.parse(request.getResponsetext()).row[0].row[0];

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<datasources>
+    <endpoint endpointtype="postgis" name="k165_pg">
+        <connect>[jdaf.db.connect]</connect>
+        <user>[jdaf.db.user]</user>
+        <pwd>[jdaf.db.pwd]</pwd>
+        <srid>[cbinfo.mapserver.epsg]</srid>
+        <table pkcolumn="ogc_fid"/>
+    </endpoint>
+
+    <endpoint name="infobox-tbl" endpointtype="embedded" displayname="Infobox beskeder">
+        <srs>25832</srs>
+        <config version="1" requires="1">
+        CREATE SCHEMA infobox AUTHORIZATION SA
+        CREATE TABLE infobox.kort_beskeder ( message VARCHAR(255), id IDENTITY, expire_date date, link VARCHAR(255), title VARCHAR(255))
+        </config>
+    </endpoint>
+
+
+	<datasource displayname="Beskeder" endpoint="infobox-tbl" name="ds-kort_beskeder">
+        <table geometrycolumn="wkb_geometry" name="infobox.kort_beskeder" />
+
+        <sql command='read'>select * from infobox.kort_beskeder</sql>
+
+		<sql command='read_all'>select * from infobox.kort_beskeder
+										where expire_date >= CURDATE ()
+										AND id > [id]
+										ORDER BY id ASC;
+
+		</sql>
+
+		<sql command='read_unread'>select * from infobox.kort_beskeder
+										where expire_date >= current_date
+										AND (id > [id] OR id IN ([ids]))
+										ORDER BY id ASC;
+
+		</sql>
+
+		<sql command='read_last'>SELECT * FROM infobox.kort_beskeder
+										WHERE expire_date > current_date
+										ORDER BY id DESC
+										LIMIT 1;
+		</sql>
+		<sql command="write">insert into infobox.kort_beskeder(message,expire_date,link,title)
+							   values(
+								   [string: message],
+
+								   to_date([string: expire_date],'DD.MM.YYYY'),
+								   [string: if IsDefined(link)              then link else null endif],
+								   [string: title]
+							   );
+		</sql>
+    </datasource>
+	<!-- [timestamp: SystemTime()], -->
+
+</datasources>

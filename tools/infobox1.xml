@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tool type="plugin">
+	<requires>
+        <file type="script" name="/modules/infobox/css/bootstrap/js/bootstrap.min.js" priority="6"/>
+        <file type="css" name="/modules/infobox/css/bootstrap/css/bootstrap.min.css" priority="6"/>
+    </requires> 
+    <src><![CDATA[
+	check_cookie3();
+	setInterval(function(){
+	//	jQuery.getJSON("http://kort-test.albertslund.net/cbkort?page=get_beskeder", function(data){
+				check_cookie3();
+	//	});
+	},60000);
+	]]></src>
+	
+	
+		<jssrc><![CDATA[
+		var cookiename = "_cookieaccept";
+		var cookieID = 11;
+		var messages = {};
+		
+		function accept(){
+		//	document.getElementById('cookiepopup').style.display='none';
+			jQuery("#cookiepopup").hide(2000);
+		}
+		
+		function writeCookie(message){
+			var expdate = new Date();
+			expdate.setTime(expdate.getTime() + (1000*60*60*24*30));
+			var expiration = "expires="+expdate.toUTCString();
+ 			document.cookie=cookiename+"="+ message +";"+expiration;
+		}
+        
+				
+		function check_cookie3(){ 
+			var pos = document.cookie.indexOf(cookiename);	
+			
+			jQuery.getJSON("http://kort-test.albertslund.net/cbkort?page=get_beskeder", function (data){
+				var messages = {};
+				var cookie = 0;
+				var ms = data['row'];
+				
+				// 1. POPULATE MESSAGES MAP
+				if(pos > -1)
+					cookie = parseInt(getCookie(cookiename));
+				
+				for(var i = 0; i < ms.length; i++){
+					var message = ms[i];
+					if(parseInt(message.id) > cookie)
+						messages["message_"+ message.id] = [message.message, message.link];
+				}
+				
+				
+				var ids = jQuery.map(ms, function(m){return parseInt(m.id)});	
+					ids = jQuery.grep(ids, function(a){return a > cookie});
+				ids.sort();
+				cookieID = ids[ids.length - 1];
+				
+				
+				
+				if(messages && cookie < cookieID){
+					cookie = ids[0];
+				//	document.getElementById('cookiepopup').style.display='block';
+				    //hide the first box if alredy shown
+					if(jQuery("#cookiepopup").is(":visible")) {
+						jQuery("#cookiepopup").hide(1000);
+					}
+					jQuery("#cookiepopup").show(3000);
+					var _msg = messages["message_" + cookie][0];
+					var _link = messages["message_" + cookie][1];
+					var content = (!_link || _link == "")? _msg:
+										_msg + '... for more info <a style="font-size:16px;" href="'+ _link +'"><b>click here!</b></a>'
+					document.getElementById('cookieContent').innerHTML = content;
+					
+					//write previous/next link
+					writeCookie(cookie);
+				
+				}
+			})
+			.error(function(){});
+			
+        }
+			
+		
+		function getCookie(cname) {
+			var name = cname + "=";
+			var ca = document.cookie.split(';');
+			for(var i=0; i<ca.length; i++) {
+				var c = ca[i];
+				while (c.charAt(0)==' ') c = c.substring(1);
+				if (c.indexOf(name) == 0) return c.substring(name.length,c.length);
+			}
+			return "";
+		}
+     ]]></jssrc>
+    
+	<htmlsrc><![CDATA[
+		<div id='cookiepopup' style=' z-index: 1000000; display: none; position: absolute; bottom: 0px; border: solid black 1px; padding: 10px; 
+					background-color: red; opacity: 0.85; text-align: center; width: 60%; height:100px; margin-left:300px;font-size: 16px;'>
+		<p id='cookieContent' style="color:white; font-size: 16px"></p>
+		<br>
+		
+		<button style="width:40px; position: absolute;top:0px; right:-1px;" onclick="accept()">&times;</button>
+		</div>
+		<div class="container">
+			
+			<div class="row">
+				<div id="msg" class="col-md-6" style="position:absolute;bottom:7px;background-color:#f5f5f5;display:none;border:2px solid blue;">
+					<button id="okBtn"style="width:30px; position: absolute;top:0px; right:-1px;">OK</button>
+					<p  style="padding:20px;">
+						message placeholder.
+					</p>
+				</div>
+				<div class="col-md-3" style="position:absolute; right:0;bottom:0;">
+					<div id="list1" class="list-group" style="display:none;">
+					  <button type="button" class="list-group-item k2">Cras justo odio</button>
+					  <button type="button" class="list-group-item k2">Dapibus ac facilisis in</button>
+					  <button type="button" class="list-group-item k2">Morbi leo risus</button>
+					  <button type="button" class="list-group-item k2">Porta ac consectetur ac</button>
+					  <button type="button" class="list-group-item k2">Vestibulum at eros</button>
+					</div>
+					<div class="list-group" >
+					  <button type="button" class="list-group-item k1">Vestibulum at eros</button>
+					</div>
+				</div>
+			</div>
+		</div>
+    ]]></htmlsrc>
+</tool>

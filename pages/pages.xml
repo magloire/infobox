@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pages>
+ 	<page name="infobox.get_beskeder" transientsession="true" resultpassing="pass-all-return-last" contenttype="json">
+        <data handler="datasource" operation="execute-command">
+					<url-parameters>
+						<url-parameter name="datasource" value="ds-kort_beskeder"/>
+						<url-parameter name="command" value="read_all"/>
+						<!-- <url-parameter name="id" value="messageId"/> -->
+					</url-parameters>
+        </data>
+    </page>
+    <page name="infobox.get_unread" transientsession="true" resultpassing="pass-all-return-last" contenttype="json">
+        <data handler="datasource" operation="execute-command">
+					<url-parameters>
+						<url-parameter name="datasource" value="ds-kort_beskeder"/>
+						<url-parameter name="command" value="read_unread"/>
+						<!-- <url-parameter name="id" value="messageId"/> -->
+					</url-parameters>
+        </data>
+    </page>
+
+	<page name="infobox.get_last_message" transientsession="true" resultpassing="pass-all-return-last" contenttype="json">
+        <data handler="datasource" operation="execute-command">
+					<url-parameters>
+						<url-parameter name="datasource" value="ds-kort_beskeder"/>
+						<url-parameter name="command" value="read_last"/>
+					</url-parameters>
+        </data>
+    </page>
+
+    <page name="infobox.get_messages" transientsession="true" sessionrequired="false" contenttype="json">
+          <data handler="datasource" operation="execute-command">
+  					<url-parameters>
+  						<url-parameter name="datasource" value="ds-kort_beskeder"/>
+  						<url-parameter name="command" value="read"/>
+  					</url-parameters>
+          </data>
+      </page>
+
+      <page name="infobox.getThemes" transientsession="true" sessionrequired="false" contenttype="json">
+            <data handler="profile" operation="get-themes2" />
+        </page>
+
+</pages>
